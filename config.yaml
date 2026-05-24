@@ -1,0 +1,12 @@
+city: "Lima"
+country: "PE"
+timezone: "America/Lima"
+
+seed_routes:
+  - name: "Miraflores a San Isidro"
+    origin: "Miraflores, Lima, Peru"
+    destination: "San Isidro, Lima, Peru"
+
+  - name: "San Isidro a Miraflores"
+    origin: "San Isidro, Lima, Peru"
+    destination: "Miraflores, Lima, Peru"
