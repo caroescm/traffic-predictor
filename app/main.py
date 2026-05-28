@@ -1,15 +1,22 @@
 from fastapi import FastAPI
+from contextlib import asynccontextmanager
 from datetime import datetime
 import yaml
-
 from app.services.weather import get_weather
 from app.services.holidays import is_holiday
 from app.services.maps import get_duration_minutes
-
-app = FastAPI(title="Traffic Predictor")
+from app.scheduler import start_scheduler
 
 with open("config.yaml") as f:
     config = yaml.safe_load(f)
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    scheduler = start_scheduler()
+    yield
+    scheduler.shutdown()
+
+app = FastAPI(title="Traffic Predictor", lifespan=lifespan)
 
 @app.get("/")
 def root():
