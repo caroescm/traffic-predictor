@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Traffic Predictor</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 60px auto;
+      padding: 0 20px;
+      background: #f5f5f5;
+    }
+    h1 { color: #333; }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+    button:hover { background: #1d4ed8; }
+    #result {
+      margin-top: 24px;
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      display: none;
+    }
+    .label { color: #666; font-size: 14px; }
+    .value { font-size: 20px; font-weight: bold; color: #333; }
+    .explanation { margin-top: 16px; color: #444; line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <h1>🗺️ Traffic Predictor</h1>
+  <p>Ingresa tu origen y destino en Lima para obtener un tiempo estimado ajustado.</p>
+
+  <label>Origen</label>
+  <input id="origin" type="text" placeholder="Ej: Miraflores, Lima, Peru" />
+
+  <label>Destino</label>
+  <input id="destination" type="text" placeholder="Ej: San Isidro, Lima, Peru" />
+
+  <button onclick="predict()">Calcular</button>
+
+  <div id="result">
+    <div class="label">Tiempo base (Google Maps)</div>
+    <div class="value" id="base"></div>
+
+    <div class="label" style="margin-top:12px">Tiempo ajustado</div>
+    <div class="value" id="adjusted"></div>
+
+    <div class="label" style="margin-top:12px">Clima</div>
+    <div id="weather"></div>
+
+    <div class="explanation" id="explanation"></div>
+  </div>
+
+  <script>
+    async function predict() {
+      const origin = document.getElementById("origin").value;
+      const destination = document.getElementById("destination").value;
+      if (!origin || !destination) return alert("Ingresa origen y destino.");
+
+      const res = await fetch(`/predict?origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}`);
+      const data = await res.json();
+
+      document.getElementById("base").textContent = `${data.base_duration_minutes} min`;
+      document.getElementById("adjusted").textContent = `${data.adjusted_duration_minutes} min`;
+      document.getElementById("weather").textContent = `${data.weather}, ${data.temperature}°C`;
+      document.getElementById("explanation").textContent = data.explanation;
+      document.getElementById("result").style.display = "block";
+    }
+  </script>
+</body>
+</html>

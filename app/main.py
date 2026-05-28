@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from contextlib import asynccontextmanager
 from datetime import datetime
 import yaml
@@ -17,6 +18,7 @@ async def lifespan(app: FastAPI):
     scheduler.shutdown()
 
 app = FastAPI(title="Traffic Predictor", lifespan=lifespan)
+app.mount("/static", StaticFiles(directory="app/static", html=True), name="static")
 
 @app.get("/")
 def root():
