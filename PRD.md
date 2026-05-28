@@ -1,10 +1,6 @@
 # Product Requirements Document (PRD)
 ## Traffic Predictor
 
-**Status:** Draft  
-**Last updated:** May 2026  
-**Version:** 1.0
-
 ---
 
 ## 1. Problem Statement
