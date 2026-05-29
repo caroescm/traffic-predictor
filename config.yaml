@@ -1,12 +1,12 @@
-city: "Lima"
-country: "PE"
-timezone: "America/Lima"
+#   define city traits
+city: "Lima" # for weather API
+country: "PE" # for weather and date API
+timezone: "America/Lima" # never used -- come back to this (?)
 
+#   helps scheduler.py, defines the routes to be tracked, per route there are 2 calls to the API: origin and destination
 seed_routes:
-  - name: "Miraflores a San Isidro"
-    origin: "Miraflores, Lima, Peru"
+    origin: "Miraflores, Lima, Peru"  # -- what if user doesn't write it like this (?)
     destination: "San Isidro, Lima, Peru"
 
-  - name: "San Isidro a Miraflores"
     origin: "San Isidro, Lima, Peru"
     destination: "Miraflores, Lima, Peru"
